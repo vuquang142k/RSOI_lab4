@@ -1,0 +1,29 @@
+name: GitHub Classroom Workflow
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Autograding
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # TODO build, publish to docker hub, deploy to k8s
+
+      - name: Run API Tests
+        id: run-newman
+        uses: anthonyvscode/newman-action@v1
+        with:
+          # TODO insert your variant
+          collection: <variant>/postman/collection.json
+          environment: <variant>/postman/environment.json
+          delayRequest: 50
+          reporters: cli
+
+      - uses: education/autograding@v1
+        id: autograder
+        continue-on-error: true
