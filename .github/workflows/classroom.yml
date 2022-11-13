@@ -1,12 +1,11 @@
 name: GitHub Classroom Workflow
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
 jobs:
   build:
     name: Autograding
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
