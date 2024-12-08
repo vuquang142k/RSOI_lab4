@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.11
 COPY main.py /app/
 COPY database.py /app/
 COPY requirements.txt /app/

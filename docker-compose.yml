@@ -1,0 +1,64 @@
+version: "3"
+services:
+  postgres:
+    image: library/postgres:13
+    container_name: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./postgres/:/docker-entrypoint-initdb.d/
+    ports:
+      - "5432:5432"
+
+  gateway:
+    image: vuquang142k/gateway-service
+    build: src/gateway-service/
+    container_name: gateway-cont
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    depends_on:
+      - bonus
+      - flight
+      - ticket
+      - postgres
+
+  bonus:
+    image: vuquang142k/bonus-service
+    build: src/bonus-service/
+    container_name: bonus-cont
+    restart: on-failure
+    ports:
+      - "8050:8050"
+    depends_on:
+      - postgres
+
+
+  flight:
+    image: vuquang142k/flight-service
+    build: src/flight-service/
+    container_name: flight-cont
+    restart: on-failure
+    ports:
+      - "8060:8060"
+    depends_on:
+      - postgres
+
+
+  ticket:
+    image: vuquang142k/ticket-service
+    build: src/ticket-service/
+    container_name: ticket-cont
+    restart: on-failure
+    ports:
+      - "8070:8070"
+    depends_on:
+      - postgres
+
+
+volumes:
+  db-data:
