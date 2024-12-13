@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+    name: {{ .Values.ticket.name }}
+    labels: 
+        app : {{ .Values.ticket.name }}
+spec:
+    selector:
+        matchLabels:
+            app: {{ .Values.ticket.name }}
+    template:
+        metadata:
+            labels:
+                app: {{ .Values.ticket.name }}
+        spec:
+            containers:
+              - name: {{ .Values.ticket.name }}-lab
+                image: {{ .Values.ticket.repo }}
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: {{ .Values.ticket.port }}
+                    name: {{ .Values.ticket.name }}
+                    protocol: TCP

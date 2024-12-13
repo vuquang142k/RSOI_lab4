@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+    name: {{ .Values.bonus.name }}
+    labels: 
+        app : {{ .Values.bonus.name }}
+spec:
+    selector:
+        matchLabels:
+            app: {{ .Values.bonus.name }}
+    template:
+        metadata:
+            labels:
+                app: {{ .Values.bonus.name }}
+        spec:
+            containers:
+              - name: {{ .Values.bonus.name }}-lab
+                image: {{ .Values.bonus.repo }}
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: {{ .Values.bonus.port }}
+                    name: {{ .Values.bonus.name }}
+                    protocol: TCP

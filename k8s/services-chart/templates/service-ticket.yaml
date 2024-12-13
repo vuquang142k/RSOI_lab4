@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata: 
+    name: {{ .Values.ticket.name }}
+spec:
+    selector:
+        app: {{ .Values.ticket.name }}
+    ports:
+      - name: {{ .Values.ticket.name }}-listener
+        protocol: TCP
+        port: {{ .Values.ticket.port }}
+        targetPort: {{ .Values.ticket.name }}

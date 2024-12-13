@@ -34,3 +34,19 @@ jobs:
           docker push vuquang142k/rsoi-lab4:flight
           docker push vuquang142k/rsoi-lab4:ticket
           docker push vuquang142k/rsoi-lab4:gateway
+
+      - name: Kubectl
+        uses: Azure/setup-kubectl@v3.1
+
+      - name: Kubectl conf
+        run: |
+          mkdir $HOME/.kube
+          ls -la $HOME/.kube
+          cp ./k8s/config $HOME/.kube/config
+          kubectl cluster-info dump
+
+      - name: Deploy Helm
+        run: |
+          helm delete services
+          helm install services k8s/services-chart
+          sleep 30
