@@ -38,12 +38,10 @@ jobs:
       - name: Kubectl
         uses: Azure/setup-kubectl@v3.1
 
-      - name: Kubectl conf
+      - name: Create kube config
         run: |
           mkdir $HOME/.kube
-          ls -la $HOME/.kube
-          cp ./k8s/config $HOME/.kube/config
-          kubectl cluster-info dump
+          echo ${{ secrets.KUBE_CONFIG }} | base64 -d > $HOME/.kube/config
 
       - name: Deploy Helm
         run: |
