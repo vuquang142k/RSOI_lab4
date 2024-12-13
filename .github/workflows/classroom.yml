@@ -45,6 +45,5 @@ jobs:
 
       - name: Deploy Helm
         run: |
-          helm delete services
           helm install services k8s/services-chart
           sleep 30
