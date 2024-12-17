@@ -24,23 +24,12 @@ spec:
         app.kubernetes.io/managed-by: helm
     spec:
       containers:
-        - name: {{ .Chart.Name}}
-          imagePullPolicy: Always
-          image: {{ .Values.service.image.name }}:{{ .Values.service.image.version }}
-          
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            {{ if .Values.service.database.name }}
-            - name: DATABASE
-              value: "{{ .Values.service.database.name }}"
-            {{- end }}
-            - name: DB_HOST
-              value: "{{ .Values.service.database.host }}"
-            - name: DB_PORT
-              value: "{{ .Values.service.database.port }}"
-            - name: USERNAME
-              value: "{{ .Values.service.database.username }}"
-            - name: PASSWORD
-              value: "{{ .Values.service.database.password }}"
+            - name: GIN_MODE
+              value: release
           ports:
-            - name: web
-              containerPort: {{ .Values.service.port }}
+            - name: {{ .Chart.Name }}
+              containerPort: {{ .Values.port }}

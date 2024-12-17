@@ -1,4 +1,4 @@
-bonus:
+privilege:
   port: 8050
   image:
     repository: vuquang142k/rsoi-lab4:bonus

@@ -13,7 +13,7 @@ dependencies:
 
   - name: service-chart
     version: 1.0.0
-    alias: bonus
+    alias: privilege
 
   - name: service-chart
     version: 1.0.0
