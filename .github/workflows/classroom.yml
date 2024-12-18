@@ -38,4 +38,13 @@ jobs:
       - name: Install Kubectl
         uses: Azure/setup-kubectl@v3.1
 
-      
+      - name: Create kube config
+        run: |
+          mkdir $HOME/.kube
+          echo ${{ secrets.KUBE_CONFIG }} | base64 -d > $HOME/.kube/config
+
+      - name: Deploy DB
+        run: helm install databases k8s/postgres-chart
+
+      - name: Deploy Services
+        run: helm install services k8s/services-chart
