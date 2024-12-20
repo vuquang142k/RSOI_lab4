@@ -47,5 +47,8 @@ jobs:
       #   run: helm install databases k8s/postgres-chart
 
       - name: Deploy Services
-        run: cd k8s && helm delete services && helm install services ./services-chart
-            sleep 60
+        run: 
+          helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+          helm repo update
+          cd k8s && helm delete services && helm install services ./services-chart
+          sleep 60
