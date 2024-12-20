@@ -34,11 +34,6 @@ jobs:
           docker push vuquang142k/rsoi-lab4:flight
           docker push vuquang142k/rsoi-lab4:ticket
           docker push vuquang142k/rsoi-lab4:gateway
-      
-      # - name: Install helm
-      #   uses: azure/setup-helm@v1
-      #   with:
-      #     version: v3.8.1
 
       - name: Create kube config
         run: |
