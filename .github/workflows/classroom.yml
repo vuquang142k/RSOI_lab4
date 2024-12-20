@@ -47,6 +47,7 @@ jobs:
         run: |
           mkdir $HOME/.kube
           echo ${{ secrets.KUBE_CONFIG }} | base64 -d > $HOME/.kube/config
+          kubectl config view --raw > ~/.kube/config
 
       # - name: Deploy DB
       #   run: helm install databases k8s/postgres-chart
