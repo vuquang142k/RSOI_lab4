@@ -35,9 +35,13 @@ jobs:
           docker push vuquang142k/rsoi-lab4:ticket
           docker push vuquang142k/rsoi-lab4:gateway
 
-      - name: Install Kubectl & helm
+      - name: Install Kubectl
         uses: Azure/setup-kubectl@v3.1
-              azure/setup-helm@v4.2.0
+      
+      - name: Install helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.8.1
 
       - name: Create kube config
         run: |
