@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+    name: {{ .Values.flight.name }}
+    labels: 
+        app : {{ .Values.flight.name }}
+spec:
+    selector:
+        matchLabels:
+            app: {{ .Values.flight.name }}
+    template:
+        metadata:
+            labels:
+                app: {{ .Values.flight.name }}
+        spec:
+            containers:
+              - name: {{ .Values.flight.name }}-lab
+                image: {{ .Values.flight.repo }}
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: {{ .Values.flight.port }}
+                    name: {{ .Values.flight.name }}
+                    protocol: TCP

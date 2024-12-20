@@ -1,36 +1,31 @@
-privilege:
-  port: 8050
-  image:
-    repository: vuquang142k/rsoi-lab4:bonus
-    tag: 1.0
-  database:
-    name: privileges
-    username: program
-    password: test
-
-flight:
-  port: 8060
-  image:
-    repository: vuquang142k/rsoi-lab4:flight
-    tag: 1.0
-  database:
-    name: flights
-    username: program
-    password: test
-
-ticket:
-  port: 8070
-  image:
-    repository: vuquang142k/rsoi-lab4:ticket
-    tag: 1.0
-  database:
-    name: tickets
-    username: program
-    password: test
-
 gateway:
+  name: gateway
+  repo: vuquang142k/rsoi-lab4:gateway
   port: 8080
-  image:
-    repository: vuquang142k/rsoi-lab4:gateway
-    tag: 1.0
-  isGateway: true
+ticket:
+  name: ticket
+  repo: vuquang142k/rsoi-lab4:ticket
+  port: 8070
+bonus:
+  name: bonus
+  repo: vuquang142k/rsoi-lab4:bonus
+  port: 8050
+flight:
+  name: flight
+  repo: vuquang142k/rsoi-lab4:flight
+  port: 8060
+postgres:
+  name: postgres
+  repo: library/postgres:13
+  port: 5432
+  default_database:
+    name: postgres
+    user: postgres
+    password: postgres
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      cpu: 200m
+      memory: 1024Mi

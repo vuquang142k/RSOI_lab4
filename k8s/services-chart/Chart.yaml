@@ -1,20 +1,5 @@
-apiVersion: v2
-name: services-chart
+apiVersion: v1
+description: app
 type: application
+name: app
 version: 1.0.0
-dependencies:
-  - name: service-chart
-    version: 1.0.0
-    alias: ticket
-
-  - name: service-chart
-    version: 1.0.0
-    alias: flight
-
-  - name: service-chart
-    version: 1.0.0
-    alias: privilege
-
-  - name: service-chart
-    version: 1.0.0
-    alias: gateway

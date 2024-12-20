@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata: 
+    name: {{ .Values.bonus.name }}
+spec:
+    selector:
+        app: {{ .Values.bonus.name }}
+    ports:
+      - name: {{ .Values.bonus.name }}-listener
+        protocol: TCP
+        port: {{ .Values.bonus.port }}
+        targetPort: {{ .Values.bonus.name }}
