@@ -48,6 +48,8 @@ jobs:
           mkdir $HOME/.kube
           echo ${{ secrets.KUBE_CONFIG }} | base64 -d > $HOME/.kube/config
           kubectl config view --raw > ~/.kube/config
+          echo 'export KUBECONFIG=/etc/rancher/k3s/k3s.yaml' >> ~/.bashrc
+          source ~/.bashrc
 
       # - name: Deploy DB
       #   run: helm install databases k8s/postgres-chart
