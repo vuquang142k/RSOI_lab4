@@ -1,31 +1,36 @@
-gateway:
-  name: gateway
-  repo: vuquang142k/rsoi-lab4:gateway
-  port: 8080
-ticket:
-  name: ticket
-  repo: vuquang142k/rsoi-lab4:ticket
-  port: 8070
 bonus:
-  name: bonus
-  repo: vuquang142k/rsoi-lab4:bonus
   port: 8050
+  image:
+    repository: vuquang142k/bonus
+    tag: latest
+  database:
+    name: privileges
+    username: program
+    password: test
+
 flight:
-  name: flight
-  repo: vuquang142k/rsoi-lab4:flight
   port: 8060
-postgres:
-  name: postgres
-  repo: library/postgres:13
-  port: 5432
-  default_database:
-    name: postgres
-    user: postgres
-    password: postgres
-  resources:
-    requests:
-      cpu: 200m
-      memory: 512Mi
-    limits:
-      cpu: 200m
-      memory: 1024Mi
+  image:
+    repository: vuquang142k/flight
+    tag: latest
+  database:
+    name: flights
+    username: program
+    password: test
+
+ticket:
+  port: 8070
+  image:
+    repository: vuquang142k/ticket
+    tag: latest
+  database:
+    name: tickets
+    username: program
+    password: test
+
+gateway:
+  port: 8080
+  image:
+    repository: vuquang142k/gateway
+    tag: latest
+  isGateway: true

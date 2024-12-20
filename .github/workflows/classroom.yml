@@ -40,11 +40,10 @@ jobs:
           mkdir $HOME/.kube
           echo ${{ secrets.KUBE_CONFIG }} | base64 -d > $HOME/.kube/config
 
-      # - name: Deploy DB
-      #   run: kubectl config view --raw > ~/.kube/config
-      #     helm install databases k8s/postgres-chart
+      - name: Deploy DB
+        run: kubectl config view --raw > ~/.kube/config
+          helm install databases k8s/postgres-chart
 
       - name: Deploy Services
         run:
-          cd k8s && helm delete services && helm install services ./services-chart
-          sleep 60
+          helm install services k8s/services-chart
