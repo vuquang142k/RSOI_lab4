@@ -29,7 +29,7 @@ services:
 
   bonus:
     image: vuquang142k/bonus-service
-    build: src/bonus/
+    build: src/privilege/
     container_name: bonus-cont
     restart: on-failure
     ports:

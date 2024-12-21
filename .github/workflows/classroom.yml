@@ -37,10 +37,10 @@ jobs:
 
       - name: Build docker images
         run: |
-          docker build ./src/bonus-service/ -t vuquang142k/bonus:latest
-          docker build ./src/flight-service/ -t vuquang142k/flight:latest
-          docker build ./src/gateway-service/ -t vuquang142k/gateway:latest
-          docker build ./src/ticket-service/ -t vuquang142k/ticket:latest
+          docker build ./src/privilege/ -t vuquang142k/bonus:latest
+          docker build ./src/flight/ -t vuquang142k/flight:latest
+          docker build ./src/gateway/ -t vuquang142k/gateway:latest
+          docker build ./src/ticket/ -t vuquang142k/ticket:latest
 
       - name: Push docker images
         run: |
