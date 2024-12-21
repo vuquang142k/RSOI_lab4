@@ -16,7 +16,7 @@ services:
 
   gateway:
     image: vuquang142k/gateway-service
-    build: src/gateway-service/
+    build: src/gateway/
     container_name: gateway-cont
     restart: on-failure
     ports:
@@ -29,7 +29,7 @@ services:
 
   bonus:
     image: vuquang142k/bonus-service
-    build: src/bonus-service/
+    build: src/bonus/
     container_name: bonus-cont
     restart: on-failure
     ports:
@@ -40,7 +40,7 @@ services:
 
   flight:
     image: vuquang142k/flight-service
-    build: src/flight-service/
+    build: src/flight/
     container_name: flight-cont
     restart: on-failure
     ports:
@@ -51,7 +51,7 @@ services:
 
   ticket:
     image: vuquang142k/ticket-service
-    build: src/ticket-service/
+    build: src/ticket/
     container_name: ticket-cont
     restart: on-failure
     ports:
