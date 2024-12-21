@@ -31,18 +31,71 @@ jobs:
         env:
           WAIT_PORTS: 8080,8070,8060,8050,5432
 
-      - name: Countdown
-
-        run: sleep 25s
-        shell: bash
-
-      - name: Run API Tests
-        uses: matt-ball/newman-action@master
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
         with:
-          collection: v1/postman/collection.json
-          environment: v1/postman/environment.json
-          delayRequest: 100
-          reporters: '[ "cli" ]'
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Build docker images
+        run: |
+          docker build ./src/privilege/ -t vuquang142k/bonus:latest
+          docker build ./src/flight/ -t vuquang142k/flight:latest
+          docker build ./src/gateway/ -t vuquang142k/gateway:latest
+          docker build ./src/ticket/ -t vuquang142k/ticket:latest
+      
+      - name: Push the images to Docker Hub
+        run: |
+          docker push vuquang142k/flight-service:latest 
+          docker push vuquang142k/bonus-service:latest
+          docker push vuquang142k/ticket-service:latest
+          docker push vuquang142k/gateway-service:latest
+      - name: Setup Minikube
+        uses: medyagh/setup-minikube@master
+  
+      - name: Check Minikube Cluster
+        run: |
+          kubectl get pods -A
+  
+      - name: Create Namespace in Cluster
+        run: |
+          kubectl create namespace vuquang142k
+
+      - name: Deploy DB and services
+        run: |
+          kubectl get namespace
+          cd k8s
+          echo "------------------Deploy Postgres DB------------------"
+          helm delete postgres --namespace vuquang142k --ignore-not-found
+          helm install -n vuquang142k postgres ./postgres_db
+          echo "------------------Deploy Services------------------"
+          helm delete reserv --namespace vuquang142k --ignore-not-found
+          helm install -n vuquang142k reserv ./services
+
+      - name: Wait 30s
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '30s'
+      - name: Get all resources from namespace vuquang142k in Cluster
+        run: |
+          kubectl get all -n vuquang142k
+          kubectl get services -n vuquang142k
+
+      - name: Setup Ingress
+        run: |
+          cd k8s/networking
+          kubectl apply -f ingress.yaml
+          kubectl get ingress
+          sudo echo "$(minikube ip) myapp.local" | sudo tee -a /etc/hosts
+          URL=$(minikube service flight -n vuquang142k --url)
+      
+      - name: Setup Postman environment (app url)
+        uses: sergeysova/jq-action@v2
+        id: version
+        with:
+          cmd: >-
+            jq '.values[0].value = "http://${{ secrets.PROD_HOST }}:${{ secrets.PROD_PORT }}"'
+            < v1/postman/environment.json > out.tmp &&
+            mv out.tmp v1/postman/environment.json
 
       - uses: education/autograding@v1
         id: autograder
