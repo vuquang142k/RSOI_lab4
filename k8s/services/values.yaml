@@ -3,7 +3,7 @@ flight:
     type: NodePort
     port: 8070
     nodePort: 30070
-    image: jokerva1010123/flight-service:latest
+    image: vuquang142k/flight:latest
     env:
       DB_PORT: 5432
       DB_NAME: postgres
@@ -16,7 +16,7 @@ bonus:
     type: NodePort
     port: 8060
     nodePort: 30060
-    image: jokerva1010123/bonus-service:latest
+    image: vuquang142k/bonus:latest
     env:
       DB_PORT: 5432
       DB_NAME: postgres
@@ -29,7 +29,7 @@ ticket:
     type: NodePort
     port: 8050
     nodePort: 30050
-    image: jokerva1010123/ticket-service:latest
+    image: vuquang142k/ticket:latest
     env:
       DB_PORT: 5432
       DB_NAME: postgres
@@ -42,12 +42,12 @@ gateway:
     type: NodePort
     port: 8080
     nodePort: 30000
-    image: jokerva1010123/gateway:latest
+    image: vuquang142k/gateway:latest
     isGateway: true
     env:
-      FLIGHT_SERVICE_HOST: flight.jokerva1010123.svc.cluster.local
+      FLIGHT_SERVICE_HOST: flight.vuquang142k.svc.cluster.local
       FLIGHT_SERVICE_PORT: 8070
-      BONUS_SERVICE_HOST: bonus.jokerva1010123.svc.cluster.local
+      BONUS_SERVICE_HOST: bonus.vuquang142k.svc.cluster.local
       BONUS_SERVICE_PORT: 8060
-      TICKET_SERVICE_HOST: ticket.jokerva1010123.svc.cluster.local
+      TICKET_SERVICE_HOST: ticket.vuquang142k.svc.cluster.local
       TICKET_SERVICE_PORT: 8050
