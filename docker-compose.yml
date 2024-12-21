@@ -14,50 +14,39 @@ services:
     ports:
       - "5432:5432"
 
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 15s
+      timeout: 15s
+      retries: 2
+
   gateway:
-    image: vuquang142k/gateway-service
     build: src/gateway/
-    container_name: gateway-cont
+    container_name: gateway
     restart: on-failure
     ports:
       - "8080:8080"
-    depends_on:
-      - bonus
-      - flight
-      - ticket
-      - postgres
-
-  bonus:
-    image: vuquang142k/bonus-service
-    build: src/privilege/
-    container_name: bonus-cont
-    restart: on-failure
-    ports:
-      - "8050:8050"
-    depends_on:
-      - postgres
-
 
   flight:
-    image: vuquang142k/flight-service
     build: src/flight/
-    container_name: flight-cont
+    container_name: flight
     restart: on-failure
     ports:
       - "8060:8060"
-    depends_on:
-      - postgres
 
+  privilege:
+    build: src/privilege/
+    container_name: privilege
+    restart: on-failure
+    ports:
+      - "8050:8050"
 
   ticket:
-    image: vuquang142k/ticket-service
     build: src/ticket/
-    container_name: ticket-cont
+    container_name: ticket
     restart: on-failure
     ports:
       - "8070:8070"
-    depends_on:
-      - postgres
 
 
 volumes:
