@@ -15,6 +15,18 @@ jobs:
 
       # TODO build, publish to docker hub, deploy to k8s
 
+      - name: Build images
+        timeout-minutes: 10
+        run: docker compose build
+
+      - name: Run containers
+        timeout-minutes: 10
+        run: |
+          docker compose up -d
+          ./scripts/wait-script.sh
+        env:
+          WAIT_PORTS: 8080,8070,8060,8050
+      
       - name: Login in dockerhub
         uses: docker/login-action@v2
         with:
@@ -23,17 +35,17 @@ jobs:
 
       - name: Build docker images
         run: |
-          docker build ./src/bonus-service/ -t vuquang142k/rsoi-lab4:bonus
-          docker build ./src/flight-service/ -t vuquang142k/rsoi-lab4:flight
-          docker build ./src/gateway-service/ -t vuquang142k/rsoi-lab4:gateway
-          docker build ./src/ticket-service/ -t vuquang142k/rsoi-lab4:ticket
+          docker build ./src/bonus-service/ -t vuquang142k/bonus:latest
+          docker build ./src/flight-service/ -t vuquang142k/flight:latest
+          docker build ./src/gateway-service/ -t vuquang142k/gateway:latest
+          docker build ./src/ticket-service/ -t vuquang142k/ticket:latest
 
       - name: Push docker images
         run: |
-          docker push vuquang142k/rsoi-lab4:bonus
-          docker push vuquang142k/rsoi-lab4:flight
-          docker push vuquang142k/rsoi-lab4:ticket
-          docker push vuquang142k/rsoi-lab4:gateway
+          docker push vuquang142k/bonus:latest
+          docker push vuquang142k/flight:latest
+          docker push vuquang142k/ticket:latest
+          docker push vuquang142k/gateway:latest
 
       - name: Setup Minikube
         uses: medyagh/setup-minikube@master
